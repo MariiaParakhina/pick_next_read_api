@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace Domain;
 
 public interface IBookDataProvider
@@ -9,7 +5,8 @@ public interface IBookDataProvider
     Task<IEnumerable<Book>> GetBooksAsync();
     Task AddBookAsync(IEnumerable<Book> books);
 }
-public class BookDataProvider:IBookDataProvider
+
+public class BookDataProvider : IBookDataProvider
 {
     public Task<IEnumerable<Book>> GetBooksAsync()
     {

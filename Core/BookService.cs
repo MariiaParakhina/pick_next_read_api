@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain;
@@ -10,7 +9,7 @@ namespace Core;
 public class BookService(IBookRepository bookRepository)
 {
     public async Task<Book[]> GetAllBooksAsync()
-    { 
+    {
         return await bookRepository.GetBooks();
     }
 
@@ -22,7 +21,7 @@ public class BookService(IBookRepository bookRepository)
     public async Task<Book> PickNextRead()
     {
         var books = await GetAllBooksAsync();
-        var unreadBooks = books.Where(b=> b.Status==STATUS.ADDED).ToArray();
+        var unreadBooks = books.Where(b => b.Status == STATUS.ADDED).ToArray();
         var totalUnread = unreadBooks.Length;
         var random = new Random();
         var index = random.Next(0, totalUnread);
@@ -32,11 +31,10 @@ public class BookService(IBookRepository bookRepository)
     public async Task<string> GetAnalytics()
     {
         var books = await GetAllBooksAsync();
-        
-        var finishedBooks = books.Where(b => b.Status==STATUS.FINISHED).ToArray().Length;
-        
-        return $"Books read {finishedBooks} from {books.Count()}. So far {finishedBooks/books.Count() * 100}%";
-        
+
+        var finishedBooks = books.Where(b => b.Status == STATUS.FINISHED).ToArray().Length;
+
+        return $"Books read {finishedBooks} from {books.Count()}. So far {finishedBooks / books.Count() * 100}%";
     }
 
     public async Task UpdateBookStatus(int bookId, UpdateRequest updateRequest)

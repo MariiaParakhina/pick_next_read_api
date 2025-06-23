@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Domain;
@@ -10,7 +11,8 @@ public interface IBookRepository
     Task AddBook(Book book);
     Task UpdateBookStatus(int id, string status);
 }
-public class BookRepository(IDbConnectionFactory dbConnectionFactory):IBookRepository
+
+public class BookRepository(IDbConnectionFactory dbConnectionFactory) : IBookRepository
 {
     public async Task<Book[]> GetBooks()
     {
@@ -33,8 +35,7 @@ public class BookRepository(IDbConnectionFactory dbConnectionFactory):IBookRepos
     {
         using var dbConnection = await dbConnectionFactory.CreateConnectionAsync();
         await dbConnection.ExecuteAsync(
-            @"UPDATE books SET status = @Status WHERE id = @Id ", new{Status=status, Id=id}
-    
-    );
-}
+            @"UPDATE books SET status = @Status WHERE id = @Id ", new { Status = status, Id = id }
+        );
+    }
 }
