@@ -7,4 +7,5 @@ public class BookDto
     public string Author { get; set; }
     public bool IsPaper { get; set; }
     public string Status { get; set; }
+    public DateTime LastModified { get; set; }
 }

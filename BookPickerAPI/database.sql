@@ -7,5 +7,6 @@ CREATE TABLE books (
     title NVARCHAR(255) NOT NULL,
     author NVARCHAR(255),
     isPaper BIT,
-    status NVARCHAR(50)
+    status NVARCHAR(50),
+    lastModified TIMESTAMP
 );

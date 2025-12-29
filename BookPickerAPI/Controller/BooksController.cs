@@ -2,13 +2,19 @@ using System.Threading.Tasks;
 using Core;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
 namespace WebApplication1.Controller;
 
 [ApiController]
 [Route("api/books")]
 public class BooksController(BookService bookService) : ControllerBase
 {
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await bookService.DeleteBook(id);
+        return Ok();
+    }
     [HttpGet]
     public async Task<IActionResult> GetBooks()
     {
@@ -33,8 +39,9 @@ public class BooksController(BookService bookService) : ControllerBase
     [HttpGet("analytics")]
     public async Task<IActionResult> GetAnalytics()
     {
-        var analytics = await bookService.GetAnalytics();
-        return Ok(analytics);
+        Analitycs result = await bookService.GetAnalytics();
+        var json = JsonConvert.SerializeObject(result);
+        return Ok(json);
     }
 
     [HttpPut]

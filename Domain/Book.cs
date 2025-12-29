@@ -7,4 +7,5 @@ public class Book
     public string Author { get; set; }
     public bool IsPaper { get; set; }
     public STATUS Status { get; set; } = STATUS.ADDED;
+    public DateTime LastModified { get; set; } = DateTime.Now;
 }

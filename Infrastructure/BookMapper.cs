@@ -12,7 +12,8 @@ public static class BookMapper
             Title = dto.Title,
             Author = dto.Author,
             IsPaper = dto.IsPaper,
-            Status = MapStatus(dto.Status)
+            Status = MapStatus(dto.Status),
+            LastModified = dto.LastModified,
         };
     }
 
@@ -24,7 +25,8 @@ public static class BookMapper
             Title = book.Title,
             Author = book.Author,
             IsPaper = book.IsPaper,
-            Status = MapStatus(book.Status)
+            Status = MapStatus(book.Status),
+            LastModified = book.LastModified
         };
     }
 

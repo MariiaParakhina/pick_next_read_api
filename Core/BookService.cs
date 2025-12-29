@@ -18,6 +18,11 @@ public class BookService(IBookRepository bookRepository)
         await bookRepository.AddBook(book);
     }
 
+    public async Task DeleteBook(int id)
+    {
+        await bookRepository.DeleteBook(id);
+    }
+
     public async Task<Book> PickNextRead()
     {
         var books = await GetAllBooksAsync();
@@ -28,13 +33,18 @@ public class BookService(IBookRepository bookRepository)
         return unreadBooks[index];
     }
 
-    public async Task<string> GetAnalytics()
+    public async Task<Analitycs> GetAnalytics()
     {
         var books = await GetAllBooksAsync();
 
         var finishedBooks = books.Where(b => b.Status == STATUS.FINISHED).ToArray().Length;
-
-        return $"Books read {finishedBooks} from {books.Count()}. So far {finishedBooks / books.Count() * 100}%";
+        float result = finishedBooks * 100.0f / (float)books.Length;
+        var overallProgress = new Tuple<int,int>(books.Count(), finishedBooks);
+        var booksThisYearFinished = books.Where(b => b.Status == STATUS.FINISHED && b.LastModified.Year == DateTime.Now.Year).ToArray().Length; 
+        return new Analitycs{
+            OverallProgress = overallProgress,
+            ProgressThisYear = booksThisYearFinished
+        };
     }
 
     public async Task UpdateBookStatus(int bookId, UpdateRequest updateRequest)
